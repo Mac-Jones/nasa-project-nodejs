@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const { parse } = require('csv-parse');
-// const parse = require('csv-parse');
 
 const habitablePlanets = [];
 const isHabitablePlanet = (planet) => {
@@ -12,11 +11,6 @@ const isHabitablePlanet = (planet) => {
 		planet['koi_prad'] < 1.6
 	);
 };
-
-// const agesGreaterThan30 = [];
-// const isAgesGreaterThan30 = (person) => {
-// 	return person['Age'] > 30;
-// };
 
 function loadPlanetsData() {
 	return new Promise((resolve, reject) => {
@@ -33,28 +27,23 @@ function loadPlanetsData() {
 				if (isHabitablePlanet(data)) {
 					habitablePlanets.push(data);
 				}
-				// if (isAgesGreaterThan30(data)) {
-				// 	agesGreaterThan30.push(data);
-				// }
 			})
 			.on('error', (err) => {
 				console.log(err);
 				reject(err);
 			})
 			.on('end', () => {
-				// console.log(
-				// 	habitablePlanets.map((planet) => {
-				// 		return planet['kepler_name'];
-				// 	})
-				// );
-
 				console.log(`${habitablePlanets.length} habitable planets found`);
 				resolve();
 			});
 	});
 }
 
+function getAllPlanets() {
+	return habitablePlanets;
+}
+
 module.exports = {
 	loadPlanetsData,
-	planets: habitablePlanets,
+	getAllPlanets,
 };
